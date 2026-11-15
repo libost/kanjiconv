@@ -1,3 +1,4 @@
+// Package kanjiconv provides functions to convert Japanese text to Romanized form (Romaji).
 package kanjiconv
 
 import (
@@ -18,6 +19,10 @@ type ConvertOptions struct {
 }
 
 // InitTokenizer initializes and returns a new tokenizer instance using the IPA dictionary.
+//
+// If the tokenizer cannot be initialized, this function will panic.
+//
+// Use this function to create a tokenizer instance before calling ConvertJapaneseToRoman.
 func InitTokenizer() *tokenizer.Tokenizer {
 	t, err := tokenizer.New(ipa.Dict(), tokenizer.OmitBosEos())
 	if err != nil {
