@@ -1,7 +1,6 @@
 package kanjiconv
 
 import (
-	"log"
 	"regexp"
 	"strings"
 
@@ -14,7 +13,7 @@ import (
 func InitTokenizer() *tokenizer.Tokenizer {
 	t, err := tokenizer.New(ipa.Dict(), tokenizer.OmitBosEos())
 	if err != nil {
-		log.Fatalf("Error creating tokenizer: %v", err)
+		panic("Failed to initialize tokenizer: " + err.Error())
 	}
 	return t
 }
