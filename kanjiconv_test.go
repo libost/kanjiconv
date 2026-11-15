@@ -8,37 +8,43 @@ func TestConvertJapaneseToRoman(t *testing.T) {
 	tests := []struct {
 		name string
 		str  string
+		opts *ConvertOptions
 		want string
 	}{
 		{
 			name: "Test 1",
 			str:  "君はロックを聴かない",
+			opts: &ConvertOptions{WithSpace: true, CleanNN: true},
 			want: "Kimi wa rokku wo kika nai",
 		},
 		{
 			name: "Test 2",
 			str:  "愛は勝つ",
+			opts: &ConvertOptions{WithSpace: true, CleanNN: true},
 			want: "Ai wa katsu",
 		},
 		{
 			name: "Test 3",
 			str:  "ハナミズキ",
+			opts: &ConvertOptions{WithSpace: true, CleanNN: true},
 			want: "Hanamizuki",
 		},
 		{
 			name: "Test 4",
 			str:  "Hello, World! こんにちは",
+			opts: &ConvertOptions{WithSpace: true, CleanNN: true},
 			want: "Hello, World! konnichiwa",
 		},
 		{
 			name: "Test 5",
 			str:  "カンイ",
+			opts: &ConvertOptions{WithSpace: true, CleanNN: true},
 			want: "Kan'i",
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got := ConvertJapaneseToRoman(InitTokenizer(), tt.str)
+			got := ConvertJapaneseToRoman(InitTokenizer(), tt.str, tt.opts)
 			if !stringEqualFoldNoSpaces(got, tt.want) {
 				t.Errorf("ConvertJapaneseToRoman() = %v, want %v", got, tt.want)
 			}

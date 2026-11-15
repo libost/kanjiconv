@@ -9,6 +9,14 @@ import (
 	"github.com/ikawaha/kagome/v2/tokenizer"
 )
 
+// ConvertOptions defines options for the ConvertJapaneseToRoman function.
+type ConvertOptions struct {
+	// WithSpace indicates whether to include spaces between words in the output.
+	WithSpace bool
+	// CleanNN indicates whether to clean up double 'n' sounds in the output.
+	CleanNN bool
+}
+
 // InitTokenizer initializes and returns a new tokenizer instance using the IPA dictionary.
 func InitTokenizer() *tokenizer.Tokenizer {
 	t, err := tokenizer.New(ipa.Dict(), tokenizer.OmitBosEos())
@@ -21,7 +29,7 @@ func InitTokenizer() *tokenizer.Tokenizer {
 // ConvertJapaneseToRoman converts a Japanese string to its Romanized form using the provided tokenizer.
 //
 // Use InitTokenizer() to create a tokenizer instance before calling this function.
-func ConvertJapaneseToRoman(t *tokenizer.Tokenizer, str string) string {
+func ConvertJapaneseToRoman(t *tokenizer.Tokenizer, str string, opts *ConvertOptions) string {
 	tokens := t.Tokenize(str)
 	var result []string
 	for _, token := range tokens {
@@ -29,8 +37,16 @@ func ConvertJapaneseToRoman(t *tokenizer.Tokenizer, str string) string {
 		if !ok {
 			pron = token.Surface
 		}
-		romaji := toCleanRomaji(pron)
+		var romaji string
+		if opts != nil && opts.CleanNN {
+			romaji = toCleanRomaji(pron)
+		} else {
+			romaji = kana.KanaToRomaji(pron)
+		}
 		result = append(result, romaji)
+	}
+	if opts != nil && !opts.WithSpace {
+		return strings.Join(result, "")
 	}
 	return strings.Join(result, " ")
 }
