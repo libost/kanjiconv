@@ -18,8 +18,12 @@ import (
 
 func main() {
 	t := kanjiconv.InitTokenizer()
+	opts := &kanjiconv.ConvertOptions{
+		WithSpace: true,
+		CleanNN:     true,
+	}
 	japaneseText := "こんにちは"
-	romanizedText := kanjiconv.ConvertJapaneseToRoman(t, japaneseText)
+	romanizedText := kanjiconv.ConvertJapaneseToRoman(t, japaneseText, opts)
 	fmt.Println(romanizedText) // Output: konnichiwa
 }
 ```
