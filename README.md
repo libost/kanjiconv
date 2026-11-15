@@ -20,10 +20,10 @@ func main() {
 	t := kanjiconv.InitTokenizer()
 	opts := &kanjiconv.ConvertOptions{
 		WithSpace: true,
-		CleanNN:     true,
+		CleanNN:   true,
 	}
-	japaneseText := "こんにちは"
+	japaneseText := "Hello, 世界! こんにちは"
 	romanizedText := kanjiconv.ConvertJapaneseToRoman(t, japaneseText, opts)
-	fmt.Println(romanizedText) // Output: konnichiwa
+	fmt.Println(romanizedText) // Output: Hello, sekai! konnichiwa
 }
 ```

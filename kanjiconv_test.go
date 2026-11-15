@@ -41,6 +41,12 @@ func TestConvertJapaneseToRoman(t *testing.T) {
 			opts: &ConvertOptions{WithSpace: true, CleanNN: true},
 			want: "Kan'i",
 		},
+		{
+			name: "Test 6",
+			str:  "Hello, 世界! こんにちは",
+			opts: &ConvertOptions{WithSpace: true, CleanNN: true},
+			want: "Hello, sekai! konnichiwa",
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
